@@ -17,6 +17,7 @@ def process_video(video_path, title, upload_to_youtube):
 
     if upload_to_youtube:
         youtube.authenticate()
+        print("アップロード中...")
         url = youtube.upload_video(compressed_path, title)
         message = utils.format_upload_message(title, url)
         print(message)
