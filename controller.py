@@ -13,7 +13,9 @@ def convert_to_video(audio_path, title):
 def process_video(video_path, title, upload_to_youtube):
     filename = utils.sanitize_filename(title) + ".mp4"
     compressed_path = utils.get_temp_file_path(filename)
+
     ffmpeg.compress_video(video_path, compressed_path)
+    print(f"動画を圧縮しました: {compressed_path}")
 
     if upload_to_youtube:
         youtube.authenticate()
@@ -21,7 +23,5 @@ def process_video(video_path, title, upload_to_youtube):
         url = youtube.upload_video(compressed_path, title)
         message = utils.format_upload_message(title, url)
         print(message)
-    else:
-        print(f"動画を圧縮しました: {compressed_path}")
-        utils.cleanup_temp_file(video_path)
-        utils.open_temp_dir()
+
+    utils.open_temp_dir()
