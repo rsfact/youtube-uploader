@@ -10,12 +10,13 @@ def convert_to_video(audio_path, title):
     ffmpeg.create_video_from_audio(audio_path, image_path, video_path)
     return video_path
 
-def process_video(video_path, title, upload_to_youtube):
-    filename = utils.sanitize_filename(title) + ".mp4"
-    compressed_path = utils.get_temp_file_path(filename)
+def process_video(video_path, title, compress_video, upload_to_youtube):
+    if compress_video:
+        filename = utils.sanitize_filename(title) + ".mp4"
+        compressed_path = utils.get_temp_file_path(filename)
 
-    ffmpeg.compress_video(video_path, compressed_path)
-    print(f"動画を圧縮しました: {compressed_path}")
+        ffmpeg.compress_video(video_path, compressed_path)
+        print(f"動画を圧縮しました: {compressed_path}")
 
     if upload_to_youtube:
         youtube.authenticate()
